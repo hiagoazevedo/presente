@@ -56,7 +56,9 @@
         .aurora-text {
             background: linear-gradient(90deg, #e63946, #457b9d, #f1faee, #a8dadc, #e63946);
             background-size: 200% 200%;
+            background-clip: text;
             -webkit-background-clip: text;
+            color: transparent;
             -webkit-text-fill-color: transparent;
             animation: aurora 3s linear infinite;
         }
@@ -360,7 +362,7 @@
             },
             {
                 question: "Qual a música que arrasamos no karaokê?",
-                options: ["Start of Something New - HSM", "Perfect - Ed Sheeran", "Shallow - Lady Gaga", "All of Me - John Legend"],
+                options: ["Start of Something New - HSM", "Fabulous - HSM", "Breaking Free - HSM", "What time is it - HSM"],
                 correct: 0,
                 photo: "Nosso momento de brilhar! 🎤",
                 photoUrl: "assets/karaoke.jpeg"
@@ -395,7 +397,7 @@
             },
             {
                 question: "Qual é a nossa música?",
-                options: ["Perfect - Ed Sheeran", "Gilson - Várias queixas", "All of Me - John Legend", "Thinking Out Loud"],
+                options: ["Planos - Bk, Luccas Carlos", "Gilson - Várias queixas", "All of Me - John Legend", "Deixa - Lagum"],
                 correct: 1,
                 photo: "Essa aqui tem muito significado! 🎵",
                 photoUrl: "assets/momentos-8.jpeg"
@@ -409,7 +411,7 @@
             },
             {
                 question: "Quem é o amor da sua vida?",
-                options: ["Aurora", "Starkinho", "EUUUU", "Meu trabalho"],
+                options: ["Aurora", "Starkinho", "EUUUU", "Seu trabalho"],
                 correct: 2,
                 photo: "Todos são, mas você é a minha! 💖",
                 photoUrl: "assets/hiago.jpeg",
@@ -521,20 +523,14 @@
 
         // Carrossel de fotos finais
         function setupCarousel() {
-            // Lista de todas as fotos da pasta assets
+            // Lista de todas as fotos da pasta assets que NÃO estão nas perguntas
             const allAssetsPhotos = [
-                "assets/hiago.jpeg",
-                "assets/fondue-namorado-2.jpeg",
                 "assets/momentos-9.jpeg",
-                "assets/viagem-san-andreas-2.jpeg",
                 "assets/viagem-san-andreas.jpeg",
-                "assets/momentos-8.jpeg",
                 "assets/viagem-joao-pessoa.jpeg",
                 "assets/momentos-7.jpeg",
                 "assets/viagem-areal-2.jpeg",
-                "assets/viagem-areal.jpeg",
                 "assets/primeiro-dia-casinha-2.jpeg",
-                "assets/primeiro-dia-casinha.jpeg",
                 "assets/momentos-6.jpeg",
                 "assets/viagem-buenos-aires-2.jpeg",
                 "assets/viagem-buenos-aires.jpeg",
@@ -549,13 +545,8 @@
                 "assets/viagem-lencois.jpeg",
                 "assets/momentos-10.jpeg",
                 "assets/fondue-namorados.jpeg",
-                "assets/carnaval.jpeg",
-                "assets/primeiro-encontro.jpeg",
-                "assets/primeira-foto.jpeg",
-                "assets/pedido-namoro.jpeg",
                 "assets/pedido-namoro-2.jpeg",
-                "assets/viagem-saquarema.jpeg",
-                "assets/karaoke.jpeg"
+                "assets/viagem-saquarema.jpeg"
             ];
             // Fotos principais usadas no quiz
             const mainPhotos = questions.map(q => q.photoUrl);
