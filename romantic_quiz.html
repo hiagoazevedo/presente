@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História de Amor ❤️</title>
+    <style>
+        :root {
+            --primary: #222;
+            --secondary: #fff;
+            --tertiary: #898d88;
+            --accent: #e63946;
+            --muted: #888;
+            --radius: 18px;
+        }
+        html, body {
+            height: auto;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--tertiary);
+            min-height: 100vh;
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 393px;
+            width: 100%;
+            margin: 32px 0 32px 0;
+            padding: 16px;
+        }
+        .magic-card {
+            background: #f7f8fa;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+            border: 1.5px solid #e0e0e0;
+            padding: 32px 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: visible;
+            transition: box-shadow 0.2s, background 0.2s;
+            min-height: 0;
+        }
+        .magic-card:focus-within, .magic-card:hover {
+            box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+            background: #f1f3f6;
+        }
+        h1, .aurora-text {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+        .aurora-text {
+            background: linear-gradient(90deg, #e63946, #457b9d, #f1faee, #a8dadc, #e63946);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: aurora 3s linear infinite;
+        }
+        @keyframes aurora {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .subtitle {
+            font-size: 1em;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .progress-container {
+            margin-bottom: 18px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f1f1f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 6px;
+            transition: width 0.5s;
+            width: 0%;
+        }
+        .score {
+            font-size: 1em;
+            color: var(--accent);
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        .question {
+            font-size: 1.1em;
+            margin-bottom: 18px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .option {
+            background: #f8f9fa;
+            border: 1.5px solid #eaeaea;
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.2s, border 0.2s;
+        }
+        .option:hover {
+            background: #f1faee;
+            border-color: var(--accent);
+        }
+        .option.correct {
+            background: #a8dadc;
+            color: #1d3557;
+            border-color: #a8dadc;
+        }
+        .option.wrong {
+            background: #f8d7da;
+            color: #b71c1c;
+            border-color: #f8d7da;
+        }
+        .shiny-btn {
+            background: linear-gradient(90deg, #e63946, #a8dadc);
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            font-size: 1.1em;
+            border-radius: 24px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(230,57,70,0.08);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.2s, background 0.2s;
+        }
+        .shiny-btn:after {
+            content: '';
+            position: absolute;
+            left: -75%;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.0) 100%);
+            transform: skewX(-20deg);
+            transition: left 0.5s;
+        }
+        .shiny-btn:hover:after {
+            left: 120%;
+        }
+        .shiny-btn:hover {
+            box-shadow: 0 4px 16px rgba(230,57,70,0.15);
+            background: linear-gradient(90deg, #a8dadc, #e63946);
+        }
+        .photo-display {
+            text-align: center;
+            margin: 18px 0;
+            padding: 14px;
+            background: #f1faee;
+            border-radius: 12px;
+            color: #222;
+            font-size: 1em;
+        }
+        .photo-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #eaeaea;
+            border-radius: 12px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: #bbb;
+        }
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .matrix-bg {
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            margin: 0;
+            padding: 0;
+        }
+        #matrix-canvas {
+            display: block;
+            width: 100vw !important;
+            height: 100vh !important;
+            margin: 0;
+            padding: 0;
+        }
+        .final-matrix {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            pointer-events: auto;
+        }
+        .final-matrix-text {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 2px 12px #e63946, 0 0 8px #000;
+            margin-top: 24px;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+        .final-message {
+            color: #fff;
+            text-shadow: 0 2px 12px #e63946, 0 0 8px #000;
+            font-size: 1.2em;
+            margin: 18px 0 18px 0;
+            text-align: center;
+        }
+        .carousel-container {
+            width: 260px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+            pointer-events: auto;
+        }
+        .carousel-photo {
+            width: 240px;
+            height: 240px;
+            border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 2px 16px #0008;
+            transition: opacity 0.5s, transform 0.5s;
+            opacity: 1;
+        }
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 10px;
+        }
+        .carousel-btn {
+            background: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0004;
+            transition: background 0.2s;
+            z-index: 9999 !important;
+            position: relative !important;
+            pointer-events: auto;
+        }
+        .carousel-btn:hover {
+            background: #a8dadc;
+            color: #e63946;
+        }
+        #quiz-screen.magic-card {
+            min-height: 420px;
+        }
+        #final-screen, #final-screen .matrix-bg {
+            background: #111 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tela de Boas-vindas -->
+        <div id="welcome-screen" class="magic-card welcome-screen">
+            <h1 class="aurora-text">Nossa História de Amor ❤️</h1>
+            <p class="subtitle">
+                Oie, Bibi! ✨<br><br>
+                Preparei algo especial para nós dois. Um pequeno jogo que vai fazer você relembrar 
+                momentos da nossa história juntos.<br><br>
+                Responda as perguntas com carinho e vamos reviver nossas melhores lembranças! 💕
+            </p>
+            <button class="shiny-btn" onclick="startGame()">Começar Nossa Jornada 💖</button>
+        </div>
+
+        <!-- Tela do Quiz -->
+        <div id="quiz-screen" class="magic-card hidden">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+                <div class="score">Pontuação: <span id="score">0</span> / 100</div>
+                <div style="color: var(--muted);">Pergunta <span id="current-q">1</span> de 11</div>
+            </div>
+
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+            
+            <div id="photo-section" class="photo-display hidden">
+                <div class="photo-placeholder">📸</div>
+                <p><strong>Lembra dessa foto? ❤️</strong><br>
+                <span id="photo-caption">Um momento especial nosso!</span></p>
+            </div>
+
+            <button class="shiny-btn hidden" id="next-btn" onclick="nextQuestion()">Próxima Pergunta 💕</button>
+        </div>
+
+        <!-- Tela Final -->
+        <div id="final-screen" class="magic-card hidden" style="overflow:visible;">
+            <div class="matrix-bg hidden" id="matrix-bg">
+                <canvas id="matrix-canvas"></canvas>
+                <div class="final-matrix">
+                    <div class="aurora-text">Parabéns, meu amor! 🎉</div>
+                    <div class="final-message" id="final-message"></div>
+                    <div class="carousel-container" id="carousel-container">
+                        <img id="carousel-photo" class="carousel-photo" src="" alt="Foto especial">
+                        <div class="carousel-controls">
+                            <button class="carousel-btn" id="carousel-prev" onclick="console.log('ONCLICK DIRETO NO HTML PREV')">&#8592;</button>
+                            <button class="carousel-btn" id="carousel-next">&#8594;</button>
+                        </div>
+                    </div>
+                    <div class="final-matrix-text">NEOQEAV</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hearts" id="hearts"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Onde foi nosso primeiro encontro?",
+                options: ["Jantar na casa do Felipe", "Noite de jogos e bebidas na casa do Vh", "Festa da Milena", "Cineminha"],
+                correct: 0,
+                photo: "Nosso primeiro encontro oficial ❤️",
+                photoUrl: "assets/primeiro-encontro.jpeg"
+            },
+            {
+                question: "Que dia da semana foi nosso primeiro beijo?",
+                options: ["Sexta-feira", "Sábado", "Domingo", "Segunda-feira"],
+                correct: 1,
+                photo: "O dia que tudo começou 💋",
+                photoUrl: "assets/pedido-namoro.jpeg"
+            },
+            {
+                question: "Qual viagem que fizemos juntos que mais marcou?",
+                options: ["Lençois, BA", "San Andreas, CO", "João Pessoa, PB", "Resende, RJ"],
+                correct: 1,
+                photo: "Nunca esquecerei daquele nascer do sol em Spratt Bight! 🌅",
+                photoUrl: "assets/viagem-san-andreas-2.jpeg"
+            },
+            {
+                question: "Qual a música que arrasamos no karaokê?",
+                options: ["Start of Something New - HSM", "Perfect - Ed Sheeran", "Shallow - Lady Gaga", "All of Me - John Legend"],
+                correct: 0,
+                photo: "Nosso momento de brilhar! 🎤",
+                photoUrl: "assets/karaoke.jpeg"
+            },
+            {
+                question: "Onde foi que tiramos a nossa primeira foto?",
+                options: ["Praia do Leme", "Cachoeira do Amor", "Casa do Vh", "Casa dos seus pais"],
+                correct: 1,
+                photo: "Nunca esqueço aquele dia, almoço no leme e cachu fim de tarde! 📸",
+                photoUrl: "assets/primeira-foto.jpeg"
+            },
+            {
+                question: "Qual escola de samba desfilamos no carnaval de 2022 em Ilhabela?",
+                options: ["Leões do Ita", "G.R.C.E.S. Água na Boca", "Mocidade Independente de Ilhabela", "Unidos de Padre Anchieta"],
+                correct: 1,
+                photo: "KKKKK esse dia foi muito bom! Melhor coisa que fizemos foi desfilar de pirata. 🎭",
+                photoUrl: "assets/carnaval.jpeg"
+            },
+            {
+                question: "O que comemos em nosso primeiro dia dos namorados?",
+                options: ["Pizza", "Fondue", "Macarrão com molho branco", "Hambúrguer artesanal"],
+                correct: 1,
+                photo: "Nosso primeiro Dia dos Namorados! 💕",
+                photoUrl: "assets/fondue-namorado-2.jpeg"
+            },
+            {
+                question: "Qual foi o dia que dormimos a primeira vez em nossa casinha?",
+                options: ["8 de abril", "12 de abril", "10 de abril", "15 de abril"],
+                correct: 2,
+                photo: "O primeiro dia em nossa cazinha! 🏠",
+                photoUrl: "assets/primeiro-dia-casinha.jpeg"
+            },
+            {
+                question: "Qual é a nossa música?",
+                options: ["Perfect - Ed Sheeran", "Gilson - Várias queixas", "All of Me - John Legend", "Thinking Out Loud"],
+                correct: 1,
+                photo: "Essa aqui tem muito significado! 🎵",
+                photoUrl: "assets/momentos-8.jpeg"
+            },
+            {
+                question: "Onde sonhamos em viajar juntos?",
+                options: ["Japão e Coreia", "Europa e Nova York", "Tailândia e Bali", "Argentina e Chile"],
+                correct: 1,
+                photo: "Para sentarmos na escada do Met e comermos muitas massas em veneza! ✈️",
+                photoUrl: "assets/viagem-areal.jpeg"
+            },
+            {
+                question: "Quem é o amor da sua vida?",
+                options: ["Aurora", "Starkinho", "EUUUU", "Meu trabalho"],
+                correct: 2,
+                photo: "Todos são, mas você é a minha! 💖",
+                photoUrl: "assets/hiago.jpeg",
+                isBonus: true
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let gameState = 'welcome';
+
+        function startGame() {
+            gameState = 'playing';
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question').textContent = q.question;
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                optionEl.textContent = option;
+                optionEl.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionEl);
+            });
+
+            document.getElementById('photo-section').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            
+            // Atualizar barra de progresso
+            const progress = ((currentQuestion) / 11) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function selectOption(selectedIndex) {
+            const q = questions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.onclick = null;
+                if (index === q.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== q.correct) {
+                    option.classList.add('wrong');
+                }
+            });
+            if (selectedIndex === q.correct) {
+                if (!q.isBonus) {
+                    score += 10;
+                    document.getElementById('score').textContent = score;
+                }
+                showPhoto();
+                document.getElementById('next-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('photo-section').classList.add('hidden');
+                document.getElementById('next-btn').classList.remove('hidden');
+            }
+        }
+
+        function showPhoto() {
+            const photoSection = document.getElementById('photo-section');
+            const caption = document.getElementById('photo-caption');
+            const photoPlaceholder = document.querySelector('.photo-placeholder');
+            
+            // Substituir o placeholder por uma imagem real
+            if (questions[currentQuestion].photoUrl) {
+                photoPlaceholder.innerHTML = `<img src="${questions[currentQuestion].photoUrl}" 
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">`;
+            }
+            
+            caption.textContent = questions[currentQuestion].photo;
+            photoSection.classList.remove('hidden');
+            photoSection.classList.add('fade-in');
+            
+            setTimeout(() => {
+                const nextBtn = document.getElementById('next-btn');
+                nextBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion >= questions.length) {
+                showFinalScreen();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showFinalScreen() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('final-screen').classList.remove('hidden');
+            document.getElementById('matrix-bg').classList.remove('hidden');
+            // Mensagem única e com contraste
+            const finalMessage = document.getElementById('final-message');
+            finalMessage.innerHTML = 'Obrigado por jogar e reviver nossa história! Te amo para sempre. 💖';
+            // Carrossel de fotos restantes
+            setupCarousel();
+            startMatrix();
+            createConfetti();
+        }
+
+        // Carrossel de fotos finais
+        function setupCarousel() {
+            // Lista de todas as fotos da pasta assets
+            const allAssetsPhotos = [
+                "assets/hiago.jpeg",
+                "assets/fondue-namorado-2.jpeg",
+                "assets/momentos-9.jpeg",
+                "assets/viagem-san-andreas-2.jpeg",
+                "assets/viagem-san-andreas.jpeg",
+                "assets/momentos-8.jpeg",
+                "assets/viagem-joao-pessoa.jpeg",
+                "assets/momentos-7.jpeg",
+                "assets/viagem-areal-2.jpeg",
+                "assets/viagem-areal.jpeg",
+                "assets/primeiro-dia-casinha-2.jpeg",
+                "assets/primeiro-dia-casinha.jpeg",
+                "assets/momentos-6.jpeg",
+                "assets/viagem-buenos-aires-2.jpeg",
+                "assets/viagem-buenos-aires.jpeg",
+                "assets/viagem-penedo.jpeg",
+                "assets/momentos-5.jpeg",
+                "assets/momentos-4.jpeg",
+                "assets/momentos-3.jpeg",
+                "assets/momentos-2.jpeg",
+                "assets/momentos.jpeg",
+                "assets/viagem-lencois-3.jpeg",
+                "assets/viagem-lencois-2.jpeg",
+                "assets/viagem-lencois.jpeg",
+                "assets/momentos-10.jpeg",
+                "assets/fondue-namorados.jpeg",
+                "assets/carnaval.jpeg",
+                "assets/primeiro-encontro.jpeg",
+                "assets/primeira-foto.jpeg",
+                "assets/pedido-namoro.jpeg",
+                "assets/pedido-namoro-2.jpeg",
+                "assets/viagem-saquarema.jpeg",
+                "assets/karaoke.jpeg"
+            ];
+            // Fotos principais usadas no quiz
+            const mainPhotos = questions.map(q => q.photoUrl);
+            // Fotos extras possíveis (sem as principais)
+            const extraPhotos = allAssetsPhotos.filter(p => !mainPhotos.includes(p));
+            let current = 0;
+            const photoEl = document.getElementById('carousel-photo');
+            const prevBtn = document.getElementById('carousel-prev');
+            const nextBtn = document.getElementById('carousel-next');
+            if (extraPhotos.length === 0) {
+                document.getElementById('carousel-container').style.display = 'none';
+                return;
+            } else {
+                document.getElementById('carousel-container').style.display = 'flex';
+            }
+            function showPhoto(idx) {
+                photoEl.style.opacity = 0;
+                setTimeout(() => {
+                    photoEl.src = extraPhotos[idx];
+                    photoEl.onload = () => { photoEl.style.opacity = 1; };
+                }, 200);
+            }
+            showPhoto(current);
+            // Corrige: sobrescreve diretamente o onclick dos botões e adiciona logs
+            if (prevBtn && nextBtn) {
+                prevBtn.onclick = function() {
+                    current = (current - 1 + extraPhotos.length) % extraPhotos.length;
+                    showPhoto(current);
+                };
+                nextBtn.onclick = function() {
+                    current = (current + 1) % extraPhotos.length;
+                    showPhoto(current);
+                };
+            }
+        }
+
+        function createConfetti() {
+            if (window.confetti) {
+                window.confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                const container = document.createElement('div');
+                container.className = 'celebration';
+                document.body.appendChild(container);
+                const colors = ['#e63946', '#a8dadc', '#457b9d', '#f1faee'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * 100 + '%';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.animationDelay = Math.random() * 3 + 's';
+                        container.appendChild(confetti);
+                    }, i * 50);
+                }
+                setTimeout(() => container.remove(), 5000);
+            }
+        }
+
+        function startMatrix() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+            // Garante que o canvas ocupe toda a tela
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const phrase = 'NEOQEAV';
+            const fontSize = 38;
+            // Aumenta o espaçamento das colunas
+            const columns = Math.floor(canvas.width / (fontSize * 2.7));
+            // Para cada coluna, guardamos a posição Y atual e a velocidade
+            const drops = Array(columns).fill(0).map(() => Math.random() * canvas.height);
+            const speeds = Array(columns).fill(0).map(() => 1.5 + Math.random() * 1.5);
+            const trailLength = 8; // Menos frases no rastro
+
+            function drawMatrix() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(34,34,34,0.28)'; // Fundo um pouco mais opaco
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = fontSize + 'px monospace';
+                ctx.textAlign = 'center';
+                for (let i = 0; i < columns; i++) {
+                    // Espaçamento maior entre colunas
+                    const x = i * fontSize * 2.7 + fontSize;
+                    for (let t = 0; t < trailLength; t++) {
+                        const y = drops[i] - t * fontSize;
+                        if (y < 0) continue;
+                        const alpha = Math.max(0, 1 - t / trailLength);
+                        ctx.fillStyle = `rgba(230,57,70,${alpha})`;
+                        ctx.fillText(phrase, x, y);
+                    }
+                    drops[i] += speeds[i];
+                    if (drops[i] > canvas.height + trailLength * fontSize) {
+                        drops[i] = -Math.random() * 100;
+                        speeds[i] = 1.5 + Math.random() * 1.5;
+                    }
+                }
+            }
+            if (window.matrixInterval) clearInterval(window.matrixInterval);
+            window.matrixInterval = setInterval(drawMatrix, 40);
+        }
+    </script>
+</body>
+</html>
