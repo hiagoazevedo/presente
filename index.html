@@ -47,14 +47,14 @@
             background: #f1f3f6;
         }
         h1, .aurora-text {
-            font-size: 2em;
+            font-size: 1.7rem;
             font-weight: 700;
             margin-bottom: 18px;
             color: var(--primary);
             letter-spacing: -1px;
         }
         .aurora-text {
-            background: linear-gradient(90deg, #e63946, #457b9d, #f1faee, #a8dadc, #e63946);
+            background: linear-gradient(90deg, #457b9d, #f1faee, #ffd700, #457b9d);
             background-size: 200% 200%;
             background-clip: text;
             -webkit-background-clip: text;
@@ -64,7 +64,8 @@
         }
         @keyframes aurora {
             0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 100%; }
         }
         .subtitle {
             font-size: 1em;
@@ -131,7 +132,9 @@
             border-color: #f8d7da;
         }
         .shiny-btn {
-            background: linear-gradient(90deg, #e63946, #a8dadc);
+            background: linear-gradient(90deg, #457b9d, #f1faee, #ffd700, #457b9d);
+            background-size: 200% 200%;
+            animation: aurora 3s linear infinite;
             color: #fff;
             border: none;
             padding: 14px 36px;
